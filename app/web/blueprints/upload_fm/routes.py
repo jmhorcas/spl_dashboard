@@ -6,7 +6,7 @@ from . import upload_fm_bp
 
 from . import utils
 
-from web.blueprints.chart_product_distribution.models import get_product_distribution
+from web.blueprints.analysis import models as analysis
 
 
 @upload_fm_bp.route('/', methods=['POST'])
@@ -28,6 +28,10 @@ def upload_fm():
 
         print(fm_model)
         data = {}
-        data['product_distribution'] = get_product_distribution(fm_model)
+        data['product_distribution'] = analysis.get_product_distribution(fm_model)
+        data.update(analysis.get_configurations_number(fm_model))
+        data['n_features'] = len(fm_model.get_features())
+        data['n_constraints'] = len(fm_model.get_constraints())
+
         print(data['product_distribution'])
     return flask.render_template('visualizations.html', data=data)
