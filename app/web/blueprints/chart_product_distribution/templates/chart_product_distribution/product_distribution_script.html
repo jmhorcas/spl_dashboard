@@ -1,0 +1,60 @@
+<script type="text/javascript">
+
+const ctx = document.getElementById('chart_product_distribution');
+
+var x = '{{data.product_distribution.x | tojson | safe }}';
+x = JSON.parse(x);
+var y = '{{data.product_distribution.y | tojson | safe }}';
+y = JSON.parse(y);
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: x,
+    datasets: [{
+      label: 'Products',
+      data: y,
+      borderWidth: 1,
+      borderColor: 'black',
+      lineTension: 0.5,
+      fill: {
+        target: 'origin',
+        above: 'rgb(126, 157, 188)',   // Area will be red above the origin
+      }
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+            display: true,
+            text: "Products' density"
+        }
+      },
+      x: {
+        title: {
+            display: true,
+            text: "#Features"
+        }
+      }
+    },
+    plugins: {
+        legend: {
+            display: false
+        },
+        tooltip: {
+            displayColors: false,
+            callbacks: {
+                label: function(context) {
+                    return context.parsed.y + ' products with ' + context.parsed.x + ' features';
+                },
+                title: function(context) {
+                    return '';
+                }
+            }
+        }
+    }
+  }
+});
+</script>

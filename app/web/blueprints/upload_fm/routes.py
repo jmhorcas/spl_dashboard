@@ -1,11 +1,12 @@
 import os
 import flask
 from werkzeug.utils import secure_filename
-import tempfile
 
 from . import upload_fm_bp
 
 from . import utils
+
+from web.blueprints.chart_product_distribution.models import get_product_distribution
 
 
 @upload_fm_bp.route('/', methods=['POST'])
@@ -26,4 +27,7 @@ def upload_fm():
         os.remove(filepath)
 
         print(fm_model)
-    return flask.render_template('index.html')
+        data = {}
+        data['product_distribution'] = get_product_distribution(fm_model)
+        print(data['product_distribution'])
+    return flask.render_template('visualizations.html', data=data)

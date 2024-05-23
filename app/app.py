@@ -3,6 +3,7 @@ import os
 import flask
 
 from web.blueprints.upload_fm import upload_fm_bp
+from web.blueprints.chart_product_distribution import chart_product_distribution_bp
 
 
 # Create the App
@@ -20,6 +21,7 @@ flask_app.static_url_path = '/static'
 
 # Register blueprints
 flask_app.register_blueprint(upload_fm_bp, url_prefix='/')
+flask_app.register_blueprint(chart_product_distribution_bp, url_prefix='/')
 
 
 @flask_app.route('/')

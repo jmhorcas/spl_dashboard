@@ -24,13 +24,29 @@
 </head>
 
 <body id="page-top">
+
     <!-- Page Wrapper -->
     <div id="wrapper">
         {% include 'side_bar.html' %}
-        {% include 'main_content.html' %}
-        {% include 'footer.html' %}
-    </div>
 
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+                {% include 'top_bar.html' %}
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+            <!-- End of Main Content -->
+
+            {% include 'footer.html' %}
+        </div>
+    </div>
     
 
     <!-- JQuery-->
@@ -44,5 +60,6 @@
 
     {% block scripts %}
     {% endblock %}
+
 </body>
 </html>
