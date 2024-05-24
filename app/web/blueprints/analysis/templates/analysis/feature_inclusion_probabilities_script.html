@@ -1,28 +1,25 @@
 <script type="text/javascript">
 
-function chart_product_distribution() {
-  const ctx = document.getElementById('chart_product_distribution');
+function chart_feature_inclusion_probabilities() {
+  var ctx = document.getElementById('chart_feature_inclusion_probabilities');
 
-  var x = '{{data.product_distribution.x | tojson | safe }}';
+  var x = '{{data.feature_inclusion_probabilities.x | tojson | safe }}';
   x = JSON.parse(x);
-  var y = '{{data.product_distribution.y | tojson | safe }}';
+  var y = '{{data.feature_inclusion_probabilities.y | tojson | safe }}';
   y = JSON.parse(y);
-
+  var colors = '{{data.feature_inclusion_probabilities.colors | tojson | safe }}';
+  colors = JSON.parse(colors);
 
   new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: x,
       datasets: [{
-        label: 'Products',
+        label: '%Features',
         data: y,
         borderWidth: 1,
         borderColor: 'black',
-        lineTension: 0.5,
-        fill: {
-          target: 'origin',
-          above: 'rgb(126, 157, 188)',
-        }
+        backgroundColor: colors,
       }]
     },
     options: {
@@ -31,16 +28,17 @@ function chart_product_distribution() {
           beginAtZero: true,
           title: {
               display: true,
-              text: "Products' density"
+              text: "%Features"
           }
         },
         x: {
           title: {
               display: true,
-              text: "#Features"
-          }
+              text: "Feature probability of being included in a valid product"
+          },
         }
       },
+      barThickness: 4,
       plugins: {
           legend: {
               display: false
@@ -49,16 +47,13 @@ function chart_product_distribution() {
               displayColors: false,
               callbacks: {
                   label: function(context) {
-                      return context.parsed.y + ' products with ' + context.parsed.x + ' features';
+                      return context.parsed.y + '% features';
                   },
-                  title: function(context) {
-                      return '';
-                  }
               }
           }
       }
     }
   });
 }
-chart_product_distribution();
+chart_feature_inclusion_probabilities();
 </script>

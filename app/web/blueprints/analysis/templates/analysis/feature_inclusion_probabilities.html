@@ -1,12 +1,12 @@
-<!-- Area Chart -->
+<!-- Chart Content -->
 <div class="col-xl-6 col-lg-6">
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Product Distribution</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Feature Inclusion Probabilities</h6>
             <div class="dropdown no-arrow">
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
@@ -21,8 +21,19 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            <div class="chart-area">
-                <canvas id="chart_product_distribution"></canvas>
+            <div class="chart-pie pt-6 pb-2">
+                <canvas id="chart_feature_inclusion_probabilities"></canvas>
+            </div>
+            <div class="mt-4 text-center small">
+                <span class="mr-2">
+                    <i class="fas fa-circle text-danger"></i> Dead features
+                </span>
+                <span class="mr-2">
+                    <i class="fas fa-circle text-warning"></i> Pure optional features
+                </span>
+                <span class="mr-2">
+                    <i class="fas fa-circle text-success"></i> Core features
+                </span>
             </div>
         </div>
     </div>

@@ -32,6 +32,7 @@ def upload_fm():
         data.update(analysis.get_configurations_number(fm_model))
         data['n_features'] = len(fm_model.get_features())
         data['n_constraints'] = len(fm_model.get_constraints())
+        data['feature_inclusion_probabilities'] = analysis.get_feature_inclusion_probabilities(fm_model)
 
         print(data['product_distribution'])
-    return flask.render_template('visualizations.html', data=data)
+    return flask.render_template('analysis.html', data=data)
