@@ -26,13 +26,12 @@ def upload_fm():
         fm_model = utils.read_fm_file(filepath)
         os.remove(filepath)
 
-        print(fm_model)
         data = {}
         data['product_distribution'] = analysis.get_product_distribution(fm_model)
         data.update(analysis.get_configurations_number(fm_model))
         data['n_features'] = len(fm_model.get_features())
         data['n_constraints'] = len(fm_model.get_constraints())
         data['feature_inclusion_probabilities'] = analysis.get_feature_inclusion_probabilities(fm_model)
-
-        print(data['product_distribution'])
+        data.update(analysis.get_variability(fm_model))
+        data.update(analysis.get_homogeneity(fm_model))
     return flask.render_template('analysis.html', data=data)

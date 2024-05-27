@@ -5,9 +5,11 @@ from flamapy.metamodels.fm_metamodel.models import FeatureModel
 from flamapy.metamodels.bdd_metamodel.models import BDDModel
 from flamapy.metamodels.bdd_metamodel.transformations import FmToBDD
 from flamapy.metamodels.bdd_metamodel.operations import (
-    BDDProductsNumber,
+    BDDConfigurationsNumber,
     BDDProductDistribution,
     BDDFeatureInclusionProbability,
+    BDDHomogeneity,
+    BDDVariability
 )
 
 
@@ -38,12 +40,12 @@ class FM():
         return self._bdd_model
 
 
-
-
 def get_product_distribution(fm_model: FeatureModel) -> dict[str, Any]:
     fm = FM.get_instance(fm_model)
-    dist = BDDProductDistribution().execute(fm.bdd_model).get_result()
-    return {'x': list(range(len(dist))), 'y': dist}
+    dist_op = BDDProductDistribution()
+    dist = dist_op.execute(fm.bdd_model).get_result()
+    dist_stats = {e: round(v, 2) for e, v in dist_op.descriptive_statistics().items()}
+    return {'x': list(range(len(dist))), 'y': dist, 'descriptive_statistics': dist_stats}
 
 
 def get_feature_inclusion_probabilities(fm_model: FeatureModel) -> dict[str, Any]:
@@ -59,11 +61,18 @@ def get_feature_inclusion_probabilities(fm_model: FeatureModel) -> dict[str, Any
 
 def get_configurations_number(fm_model: FeatureModel) -> dict[str, Any]:
     fm = FM.get_instance(fm_model)
-    n_configs = BDDProductsNumber().execute(fm.bdd_model).get_result()
+    n_configs = BDDConfigurationsNumber().execute(fm.bdd_model).get_result()
     return {'n_configurations': n_configs}
+
 
 def get_variability(fm_model: FeatureModel) -> dict[str, Any]:
     fm = FM.get_instance(fm_model)
-    n_configs = BDDProductsNumber().execute(fm.bdd_model).get_result()
-    return {'n_configurations': n_configs}
+    total_variability, partial_variability = BDDVariability().execute(fm.bdd_model).get_result()
+    return {'total_variability': round(total_variability * 100, 2), 
+            'partial_variability': round(partial_variability * 100, 2)}
 
+
+def get_homogeneity(fm_model: FeatureModel) -> dict[str, Any]:
+    fm = FM.get_instance(fm_model)
+    homogeneity = BDDHomogeneity().execute(fm.bdd_model).get_result()
+    return {'homogeneity': round(homogeneity * 100, 2)}
