@@ -7,7 +7,7 @@ from flamapy.metamodels.bdd_metamodel.transformations import FmToBDD
 from flamapy.metamodels.bdd_metamodel.operations import (
     BDDProductsNumber,
     BDDProductDistribution,
-    BDDFeatureInclusionProbability
+    BDDFeatureInclusionProbability,
 )
 
 
@@ -62,4 +62,8 @@ def get_configurations_number(fm_model: FeatureModel) -> dict[str, Any]:
     n_configs = BDDProductsNumber().execute(fm.bdd_model).get_result()
     return {'n_configurations': n_configs}
 
+def get_variability(fm_model: FeatureModel) -> dict[str, Any]:
+    fm = FM.get_instance(fm_model)
+    n_configs = BDDProductsNumber().execute(fm.bdd_model).get_result()
+    return {'n_configurations': n_configs}
 
