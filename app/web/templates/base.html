@@ -91,6 +91,13 @@
     <!-- Custom scripts for all pages -->
     <script src="{{url_for('static', filename='js/sb-admin-2.min.js')}}"></script>
 
+    <!-- Enable tooltips everywhere -->
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
     {% block scripts %}
     {% endblock %}
 

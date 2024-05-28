@@ -53,7 +53,7 @@ def get_feature_inclusion_probabilities(fm_model: FeatureModel) -> dict[str, Any
     n_features = len(fm_model.get_features())
     prob = BDDFeatureInclusionProbability().execute(fm.bdd_model).get_result()
     x_axis = [x  / 100.0 for x in range(0, 101, 1)]
-    y_axis = [round(sum(math.isclose(x, round(p, 2), abs_tol=1e-2) for p in prob.values())/n_features, 2)*100 for x in x_axis]
+    y_axis = [round(sum(math.isclose(x, round(p, 2), abs_tol=1e-4) for p in prob.values())/n_features, 2)*100 for x in x_axis]
     colors = ['rgb(231, 74, 59)'] + ['rgb(126, 157, 188)'] * (len(x_axis) - 2) + ['rgb(28, 200, 138)']
     colors[50] = 'rgb(246, 194, 62)'
     return {'x': x_axis, 'y': y_axis, 'colors': colors}
@@ -68,8 +68,12 @@ def get_configurations_number(fm_model: FeatureModel) -> dict[str, Any]:
 def get_variability(fm_model: FeatureModel) -> dict[str, Any]:
     fm = FM.get_instance(fm_model)
     total_variability, partial_variability = BDDVariability().execute(fm.bdd_model).get_result()
-    return {'total_variability': round(total_variability * 100, 2), 
-            'partial_variability': round(partial_variability * 100, 2)}
+    total_variability_res = round(total_variability * 100, 2)
+    total_variability_str = str(total_variability_res) if total_variability_res > 0 else '{:.2e}'.format(total_variability * 100)
+    partial_variability_res = round(partial_variability * 100, 2)
+    partial_variability_str = str(partial_variability_res) if partial_variability_res > 0 else '{:.2e}'.format(partial_variability * 100)
+    return {'total_variability': total_variability_str, 
+            'partial_variability': partial_variability_str}
 
 
 def get_homogeneity(fm_model: FeatureModel) -> dict[str, Any]:
