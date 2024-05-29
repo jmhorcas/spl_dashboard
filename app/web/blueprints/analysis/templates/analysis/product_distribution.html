@@ -3,7 +3,7 @@
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Product Distribution</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{data['Product Distribution'].name}}</h6>
             <div class="dropdown no-arrow">
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -26,28 +26,28 @@
             </div>
             <div class="mt-4 text-center small">
                 <span class="mr-2">
-                    <i class="fas fa-circle text-dark"></i>Mean: {{data.product_distribution.descriptive_statistics.Mean}}
+                    <i class="fas fa-circle text-dark"></i>Mean: {{data['Descriptive statistics'].value.Mean}}
                 </span>
                 <span class="mr-2">
-                    <i class="fas fa-circle text-dark"></i>Standard deviation: {{data.product_distribution.descriptive_statistics['Standard deviation']}}
+                    <i class="fas fa-circle text-dark"></i>Standard deviation: {{data['Descriptive statistics'].value['Standard deviation']}}
                 </span>
                 <span class="mr-2">
-                    <i class="fas fa-circle text-dark"></i>Median: {{data.product_distribution.descriptive_statistics.Median}}
+                    <i class="fas fa-circle text-dark"></i>Median: {{data['Descriptive statistics'].value.Median}}
                 </span>
                 <span class="mr-2">
-                    <i class="fas fa-circle text-dark"></i>Median absolute deviation: {{data.product_distribution.descriptive_statistics['Median absolute deviation']}}
+                    <i class="fas fa-circle text-dark"></i>Median absolute deviation: {{data['Descriptive statistics'].value['Median absolute deviation']}}
                 </span>
                 <span class="mr-2">
-                    <i class="fas fa-circle text-dark"></i>Mode: {{data.product_distribution.descriptive_statistics.Mode}}
+                    <i class="fas fa-circle text-dark"></i>Mode: {{data['Descriptive statistics'].value.Mode}}
                 </span>
                 <span class="mr-2">
-                    <i class="fas fa-circle text-dark"></i>Min: {{data.product_distribution.descriptive_statistics.Min}}
+                    <i class="fas fa-circle text-dark"></i>Min: {{data['Descriptive statistics'].value.Min}}
                 </span>
                 <span class="mr-2">
-                    <i class="fas fa-circle text-dark"></i>Max: {{data.product_distribution.descriptive_statistics.Max}}
+                    <i class="fas fa-circle text-dark"></i>Max: {{data['Descriptive statistics'].value.Max}}
                 </span>
                 <span class="mr-2">
-                    <i class="fas fa-circle text-dark"></i>Range: {{data.product_distribution.descriptive_statistics.Range}}
+                    <i class="fas fa-circle text-dark"></i>Range: {{data['Descriptive statistics'].value.Range}}
                 </span>
             </div>
         </div>

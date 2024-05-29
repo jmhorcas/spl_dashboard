@@ -3,11 +3,11 @@
 function chart_feature_inclusion_probabilities() {
   var ctx = document.getElementById('chart_feature_inclusion_probabilities');
 
-  var x = '{{data.feature_inclusion_probabilities.x | tojson | safe }}';
+  var x = '{{data["Feature Inclusion Probabilities"].value.x | tojson | safe }}';
   x = JSON.parse(x);
-  var y = '{{data.feature_inclusion_probabilities.y | tojson | safe }}';
+  var y = '{{data["Feature Inclusion Probabilities"].value.y | tojson | safe }}';
   y = JSON.parse(y);
-  var colors = '{{data.feature_inclusion_probabilities.colors | tojson | safe }}';
+  var colors = '{{data["Feature Inclusion Probabilities"].value.colors | tojson | safe }}';
   colors = JSON.parse(colors);
 
   new Chart(ctx, {

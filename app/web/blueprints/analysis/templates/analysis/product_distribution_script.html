@@ -3,9 +3,9 @@
 function chart_product_distribution() {
   const ctx = document.getElementById('chart_product_distribution');
 
-  var x = '{{data.product_distribution.x | tojson | safe }}';
+  var x = '{{data["Product Distribution"].value.x | tojson | safe }}';
   x = JSON.parse(x);
-  var y = '{{data.product_distribution.y | tojson | safe }}';
+  var y = '{{data["Product Distribution"].value.y | tojson | safe }}';
   y = JSON.parse(y);
 
 

@@ -5,6 +5,8 @@ import flask
 from web.blueprints.upload_fm import upload_fm_bp
 from web.blueprints.analysis import analysis_bp
 
+from cache import cache
+
 
 # Create the App
 flask_app = flask.Flask(__name__)
@@ -17,6 +19,9 @@ flask_app.config['UPLOAD_FOLDER'] = 'tmp'
 flask_app.template_folder = 'web/templates'
 flask_app.static_folder = 'web/static'
 flask_app.static_url_path = '/static'
+
+# Initialize the cache
+cache.init_app(flask_app)
 
 
 # Register blueprints
