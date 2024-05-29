@@ -1,0 +1,26 @@
+<div class="col-xl-3 col-md-6 mb-4" data-bs-toggle="tooltip" data-bs-placement="top" title="{{data['Satisfiable'].description}}">
+    {% if data['Satisfiable'].value %}
+    <div class="card border-left-success shadow h-100 py-2">
+    {% else %}
+    <div class="card border-left-danger shadow h-100 py-2">
+    {% endif %}
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                        {{data['Satisfiable'].name}}</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{data['Satisfiable'].value}}</div>
+                </div>
+                {% if data['Satisfiable'].value %}
+                <div class="col-auto">
+                    <i class="fas fa-circle-check fa-2x text-success"></i>
+                </div>
+                {% else %}
+                <div class="col-auto">
+                    <i class="fas fa-circle-xmark fa-2x text-danger"></i>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

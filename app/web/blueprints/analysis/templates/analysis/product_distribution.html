@@ -2,7 +2,7 @@
 <div class="col-xl-6 col-lg-6">
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" data-bs-toggle="tooltip" data-bs-placement="top" title="{{data['Product Distribution'].description}}">
             <h6 class="m-0 font-weight-bold text-primary">{{data['Product Distribution'].name}}</h6>
             <div class="dropdown no-arrow">
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -24,7 +24,7 @@
             <div class="chart-area">
                 <canvas id="chart_product_distribution"></canvas>
             </div>
-            <div class="mt-4 text-center small">
+            <div class="mt-4 text-center small" data-bs-toggle="tooltip" data-bs-placement="top" title="{{data['Descriptive statistics'].description}}">
                 <span class="mr-2">
                     <i class="fas fa-circle text-dark"></i>Mean: {{data['Descriptive statistics'].value.Mean}}
                 </span>

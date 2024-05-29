@@ -12,12 +12,18 @@
     <!-- Content Row -->
     <div class="row">
 
+        <!-- Features Card -->
+        {% include 'analysis/satisfiable.html' %}
+
          <!-- Features Card -->
          {% include 'analysis/features_number.html' %}
 
          <!-- Constraints Card -->
          {% include 'analysis/constraints_number.html' %}
          
+        <!-- Extra Constraint Representativeness Card -->
+        {% include 'analysis/extra_constraint_representativeness.html' %}
+
          <!-- Configurations Card -->
          {% include 'analysis/configurations_number.html' %}
  
@@ -29,9 +35,6 @@
 
          <!-- Homogeneity Card -->
          {% include 'analysis/homogeneity.html' %}
-
-         <!-- Extra Constraint Representativeness Card -->
-         {% include 'analysis/extra_constraint_representativeness.html' %}
 
     </div>
 

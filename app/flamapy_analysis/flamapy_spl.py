@@ -49,7 +49,13 @@ class FlamapySPL():
     def constraints(self) -> list[Constraint]:
         """Constraints of the model."""
         return self.fm_model.get_constraints()
-    
+
+    @cached_property
+    def satisfiable(self) -> bool:
+        """A feature model is satisfiable (aka valid, not void) if there exists at least one configuration which is consistent with the feature model's relations and contraints."""
+        return self._dm.use_operation(self.bdd_model, 'BDDSatisfiable').get_result()
+
+
     @cached_property
     def configurations_number(self) -> int:
         """Number of valid configurations that can be derived."""

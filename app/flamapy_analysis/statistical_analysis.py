@@ -43,6 +43,11 @@ class StatisticalAnalysis():
                                      description=FlamapySPL.constraints.__doc__,
                                      value=len(self.flamapy_spl.constraints))
 
+    def satisfiable(self) -> dict[str, Any]:
+        return self.construct_result(name='Satisfiable',
+                                     description=FlamapySPL.satisfiable.__doc__,
+                                     value=self.flamapy_spl.satisfiable)
+
     def configurations_number(self) -> dict[str, Any]:
         value = utils.get_nof_configuration_as_str(self.flamapy_spl.configurations_number, 
                                                    precision=self.precision,

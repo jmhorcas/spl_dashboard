@@ -18,6 +18,7 @@ def analysis():
     stats_analysis = StatisticalAnalysis(flamapy_spl)
     results = [stats_analysis.features_number(),
                stats_analysis.constraints_number(),
+               stats_analysis.satisfiable(),
                stats_analysis.configurations_number(),
                stats_analysis.total_variability(),
                stats_analysis.partial_variability(),
