@@ -24,6 +24,7 @@ def analysis():
                stats_analysis.homogeneity(),
                stats_analysis.product_distribution(),
                stats_analysis.descriptive_statistics(),
-               stats_analysis.feature_inclusion_probabilities()]
+               stats_analysis.feature_inclusion_probabilities(),
+               stats_analysis.extra_constraint_representativeness()]
     data = {res['name']: res for res in results}
     return flask.render_template('analysis/statistical_analysis.html', data=data) 

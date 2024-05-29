@@ -105,3 +105,12 @@ class FlamapySPL():
         """Descriptive statistics summarizing the product distribution of the variability model, that is, its mean, standard deviation, median, median absolute deviation, mode, min, max, and range."""
         return descriptive_statistics(self.product_distribution)
     
+    @cached_property
+    def features_in_constraints(self) -> set[str]:
+        """Features that are present in cross-tree constraints."""
+        return {feat for ctc in self.constraints for feat in ctc.get_features()}
+    
+    @cached_property
+    def extra_constraint_representativeness(self) -> float:
+        """The degree of representativeness of the cross-tree constraints in the feature tree, as the ratio of the number of features involved in constraints to the number of features in the SPL."""
+        return len(self.features_in_constraints) / len(self.features)

@@ -96,3 +96,8 @@ class StatisticalAnalysis():
                                      description=FlamapySPL.descriptive_statistics.__doc__,
                                      value=value)
     
+    def extra_constraint_representativeness(self) -> dict[str, Any]:
+        value = self.get_percentage_str(self.flamapy_spl.extra_constraint_representativeness)
+        return self.construct_result(name='Extra constraint representativeness',
+                                     description=FlamapySPL.extra_constraint_representativeness.__doc__,
+                                     value=value)
