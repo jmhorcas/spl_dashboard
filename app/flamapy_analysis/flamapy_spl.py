@@ -84,22 +84,22 @@ class FlamapySPL():
     @cached_property
     def core_features(self) -> list[str]:
         """The core features are those features present in all configurations."""
-        return [feat for feat, prob, in self.feature_inclusion_probabilities().items() if prob >= 1.0]
+        return [feat for feat, prob, in self.feature_inclusion_probabilities.items() if prob >= 1.0]
 
     @cached_property
     def dead_features(self) -> list[str]:
         """The dead features are those features that are not present in any configuration."""
-        return [feat for feat, prob, in self.feature_inclusion_probabilities().items() if prob <= 0.0]
+        return [feat for feat, prob, in self.feature_inclusion_probabilities.items() if prob <= 0.0]
 
     @cached_property
     def variant_features(self) -> list[str]:
         """The variant features are those features that appear only in some configurations, that is, the features that are neither core features nor dead features."""
-        return [feat for feat, prob, in self.feature_inclusion_probabilities().items() if 0.0 < prob < 1.0]
+        return [feat for feat, prob, in self.feature_inclusion_probabilities.items() if 0.0 < prob < 1.0]
 
     @cached_property
     def pure_optional_features(self) -> list[str]:
         """The pure optional features are those feature with 0.5 (50%) probability of being selected in a valid configuration, that is, their selection is unconstrained."""
-        return [feat for feat, prob, in self.feature_inclusion_probabilities().items() if prob == 0.5]
+        return [feat for feat, prob, in self.feature_inclusion_probabilities.items() if prob == 0.5]
 
     @cached_property
     def product_distribution(self) -> list[int]:

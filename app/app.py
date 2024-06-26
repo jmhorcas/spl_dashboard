@@ -1,5 +1,5 @@
 import os
-
+import sys
 import flask
 
 from web.blueprints.upload_fm import upload_fm_bp
@@ -35,6 +35,7 @@ def index():
 
 
 if __name__ == "__main__":
+    sys.setrecursionlimit(10000)
     ENVIRONMENT_DEBUG = os.environ.get("APP_DEBUG", True)
     ENVIRONMENT_PORT = os.environ.get("APP_PORT", 5555)
 

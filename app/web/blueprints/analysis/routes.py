@@ -26,6 +26,14 @@ def analysis():
                stats_analysis.product_distribution(),
                stats_analysis.descriptive_statistics(),
                stats_analysis.feature_inclusion_probabilities(),
-               stats_analysis.extra_constraint_representativeness()]
+               stats_analysis.extra_constraint_representativeness(),
+               stats_analysis.core_features_number(),
+               stats_analysis.core_features_percentage(),
+               stats_analysis.dead_features_number(),
+               stats_analysis.dead_features_percentage(),
+               stats_analysis.variant_features_number(),
+               stats_analysis.variant_features_percentage(),
+               stats_analysis.pure_optional_features_number(),
+               stats_analysis.pure_optional_features_percentage()]
     data = {res['name']: res for res in results}
     return flask.render_template('analysis/statistical_analysis.html', data=data) 

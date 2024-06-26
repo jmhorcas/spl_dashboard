@@ -106,3 +106,51 @@ class StatisticalAnalysis():
         return self.construct_result(name='Extra constraint representativeness',
                                      description=FlamapySPL.extra_constraint_representativeness.__doc__,
                                      value=value)
+
+    def core_features_number(self) -> dict[str, Any]:
+        value = len(self.flamapy_spl.core_features)
+        return self.construct_result(name='Core features',
+                                     description=FlamapySPL.core_features.__doc__,
+                                     value=value)
+    
+    def core_features_percentage(self) -> dict[str, Any]:
+        value = self.get_percentage_str(len(self.flamapy_spl.core_features) / len(self.flamapy_spl.features))
+        return self.construct_result(name='Core features %',
+                                     description=FlamapySPL.core_features.__doc__,
+                                     value=value)
+    
+    def dead_features_number(self) -> dict[str, Any]:
+        value = len(self.flamapy_spl.dead_features)
+        return self.construct_result(name='Dead features',
+                                     description=FlamapySPL.dead_features.__doc__,
+                                     value=value)
+    
+    def dead_features_percentage(self) -> dict[str, Any]:
+        value = self.get_percentage_str(len(self.flamapy_spl.dead_features) / len(self.flamapy_spl.features))
+        return self.construct_result(name='Dead features %',
+                                     description=FlamapySPL.dead_features.__doc__,
+                                     value=value)
+    
+    def variant_features_number(self) -> dict[str, Any]:
+        value = len(self.flamapy_spl.variant_features)
+        return self.construct_result(name='Variant features',
+                                     description=FlamapySPL.variant_features.__doc__,
+                                     value=value)
+    
+    def variant_features_percentage(self) -> dict[str, Any]:
+        value = self.get_percentage_str(len(self.flamapy_spl.variant_features) / len(self.flamapy_spl.features))
+        return self.construct_result(name='Variant features %',
+                                     description=FlamapySPL.variant_features.__doc__,
+                                     value=value)
+    
+    def pure_optional_features_number(self) -> dict[str, Any]:
+        value = len(self.flamapy_spl.pure_optional_features)
+        return self.construct_result(name='Pure optional features',
+                                     description=FlamapySPL.pure_optional_features.__doc__,
+                                     value=value)
+    
+    def pure_optional_features_percentage(self) -> dict[str, Any]:
+        value = self.get_percentage_str(len(self.flamapy_spl.pure_optional_features) / len(self.flamapy_spl.features))
+        return self.construct_result(name='Pure optional features %',
+                                     description=FlamapySPL.pure_optional_features.__doc__,
+                                     value=value)
