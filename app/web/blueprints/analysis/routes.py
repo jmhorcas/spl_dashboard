@@ -34,6 +34,18 @@ def analysis():
                stats_analysis.variant_features_number(),
                stats_analysis.variant_features_percentage(),
                stats_analysis.pure_optional_features_number(),
-               stats_analysis.pure_optional_features_percentage()]
+               stats_analysis.pure_optional_features_percentage(),
+               stats_analysis.simple_constraints_number(),
+               stats_analysis.simple_constraints_percentage(),
+               stats_analysis.requires_constraints_number(),
+               stats_analysis.requires_constraints_percentage(),
+               stats_analysis.excludes_constraints_number(),
+               stats_analysis.excludes_constraints_percentage(),
+               stats_analysis.complex_constraints_number(),
+               stats_analysis.complex_constraints_percentage(),
+               stats_analysis.pseudocomplex_constraints_number(),
+               stats_analysis.pseudocomplex_constraints_percentage(),
+               stats_analysis.strictcomplex_constraints_number(),
+               stats_analysis.strictcomplex_constraints_percentage()]
     data = {res['name']: res for res in results}
     return flask.render_template('analysis/statistical_analysis.html', data=data) 
