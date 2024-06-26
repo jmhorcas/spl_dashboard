@@ -69,7 +69,7 @@ class FlamapySPL():
     @cached_property
     def partial_variability(self) -> float:
         """The partial variability measures the flexibility of the SPL considering only variant features."""
-        return self.configurations_number / (2 ** len(self.features) - 1)
+        return self.configurations_number / (2 ** len(self.variant_features) - 1)
     
     @cached_property
     def homogeneity(self) -> float:
@@ -120,3 +120,33 @@ class FlamapySPL():
     def extra_constraint_representativeness(self) -> float:
         """The degree of representativeness of the cross-tree constraints in the feature tree, as the ratio of the number of features involved in constraints to the number of features in the SPL."""
         return len(self.features_in_constraints) / len(self.features)
+    
+    @cached_property
+    def simple_constraints(self) -> list[Constraint]:
+        """Simple constraints of the model."""
+        return self.fm_model.get_simple_constraints()
+    
+    @cached_property
+    def requires_constraints(self) -> list[Constraint]:
+        """Requires constraints of the model."""
+        return self.fm_model.get_requires_constraints()
+    
+    @cached_property
+    def excludes_constraints(self) -> list[Constraint]:
+        """Excludes constraints of the model."""
+        return self.fm_model.get_excludes_constraints()
+    
+    @cached_property
+    def complex_constraints(self) -> list[Constraint]:
+        """Complex constraints of the model."""
+        return self.fm_model.get_complex_constraints()
+    
+    @cached_property
+    def pseudocomplex_constraints(self) -> list[Constraint]:
+        """Pseudo-complex constraints of the model."""
+        return self.fm_model.get_pseudocomplex_constraints()
+    
+    @cached_property
+    def strictcomplex_constraints(self) -> list[Constraint]:
+        """Strict-complex constraints of the model."""
+        return self.fm_model.get_strictcomplex_constraints()
