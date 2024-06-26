@@ -102,6 +102,12 @@
                         <div class="progress-bar bg-success" role="progressbar" style="width: {{data['Simple constraints %'].value}}%"
                             aria-valuenow="{{data['Simple constraints %'].value}}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                    <h4 class="small font-weight-bold">{{data['Complex constraints'].name}}<span
+                        class="float-right">{{data['Complex constraints'].value}} ({{data['Complex constraints %'].value}}%)</span></h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{data['Complex constraints %'].value}}%"
+                            aria-valuenow="{{data['Complex constraints %'].value}}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                     <h4 class="small font-weight-bold">{{data['Requires constraints'].name}}<span
                             class="float-right">{{data['Requires constraints'].value}} ({{data['Requires constraints %'].value}}%)</span></h4>
                     <div class="progress mb-4">
@@ -111,14 +117,8 @@
                     <h4 class="small font-weight-bold">{{data['Excludes constraints'].name}}<span
                             class="float-right">{{data['Excludes constraints'].value}} ({{data['Excludes constraints %'].value}}%)</span></h4>
                     <div class="progress mb-4">
-                        <div class="progress-bar bg-dark" role="progressbar" style="width: {{data['Excludes constraints %'].value}}%"
+                        <div class="progress-bar bg-secondary" role="progressbar" style="width: {{data['Excludes constraints %'].value}}%"
                             aria-valuenow="{{data['Excludes constraints %'].value}}" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h4 class="small font-weight-bold">{{data['Complex constraints'].name}}<span
-                            class="float-right">{{data['Complex constraints'].value}} ({{data['Complex constraints %'].value}}%)</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{data['Complex constraints %'].value}}%"
-                            aria-valuenow="{{data['Complex constraints %'].value}}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <h4 class="small font-weight-bold">{{data['Pseudo-complex constraints'].name}}<span
                         class="float-right">{{data['Pseudo-complex constraints'].value}} ({{data['Pseudo-complex constraints %'].value}}%)</span></h4>
