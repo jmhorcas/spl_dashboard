@@ -29,6 +29,7 @@ features
                     "Whipped cream"
                     Sprinkles
             Integer clients
+            Integer x
 constraints
     Scoops
     !Waffle
@@ -44,6 +45,8 @@ constraints
     clients != (10 / 2)
     clients == (10 * 2)
     Scoop.Price + Popsicle.Price < 10
-    sum(Scoops) > 0
-    avg(Scoops) == 1.0
+    sum(Scoops, clients) > 0
+    avg(Scoops, clients) == 1.0
     len("Name of customer") == 10
+    floor(clients) > 2
+    ceil(clients) < 10
