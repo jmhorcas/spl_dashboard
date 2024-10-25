@@ -3,7 +3,7 @@ import argparse
 
 from alive_progress import alive_bar, alive_it
 
-from flamapy.metamodels.fm_metamodel.transformations import UVLReader
+from flamapy.metamodels.fm_metamodel.transformations import UVLReader, UVLWriter
 from flamapy.metamodels.fm_metamodel.operations import FMMetrics
 from flamapy.metamodels.bdd_metamodel.transformations import FmToBDD, DDDMPWriter
 
@@ -14,6 +14,11 @@ def main(fm_filepath: str) -> None:
     fm_model = UVLReader(fm_filepath).transform()
 
     print(fm_model)
+    for ctc in fm_model.get_constraints():
+        print(f'{ctc.ast.pretty_str()} -> {ctc.ast.get_operators()} -> {ctc.ast.get_operands()}')
+
+    UVLWriter('output.uvl', fm_model).transform()
+    
     raise Exception
     metrics_result = FMMetrics().execute(fm_model).get_result()
     metrics_dict = {item["name"]: item for item in metrics_result}
