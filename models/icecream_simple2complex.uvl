@@ -20,7 +20,7 @@ features
                     Cone
         optional
             Waffle {Price 0.7}
-            String "Name of customer" {Value 0.5, "My Price" 2.5}
+            String "Name of customer"
             String shop
             Integer Scoops
             Topping
@@ -37,18 +37,4 @@ constraints
     Scoop => Cup | Cone
     Topping => Caramel
     Vanilla => Topping
-    Scoops > 1 & Scoop <= 3
-    shop != "Name of customer"
-    "Name of customer" == 'Josemi Horcas'
-    clients > (1 + 1)
-    clients < (10 - 1)
-    clients != (10 / 2)
-    clients == (10 * 2)
-    Scoop.Price + Popsicle.Price < 10
-    sum(Scoops, clients) > 0
-    avg(Scoops, clients) == 1.0
-    avg("Name of customer".Value) > 0
-    len("Name of customer") == 10
-    floor(clients) > 2
-    ceil(clients) < 10
-    "Name of customer"."My Price" >= 0
+    Scoops > 1 & Scoops <= 3

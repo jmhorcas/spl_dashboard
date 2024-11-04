@@ -162,7 +162,8 @@ class StatisticalAnalysis():
                                      value=value)
     
     def simple_constraints_percentage(self) -> dict[str, Any]:
-        value = self.get_percentage_str(len(self.flamapy_spl.simple_constraints) / len(self.flamapy_spl.constraints))
+        value = 0 if not self.flamapy_spl.constraints else len(self.flamapy_spl.simple_constraints) / len(self.flamapy_spl.constraints)
+        value = self.get_percentage_str(value)
         return self.construct_result(name='Simple constraints %',
                                      description=FlamapySPL.simple_constraints.__doc__,
                                      value=value)
@@ -174,7 +175,8 @@ class StatisticalAnalysis():
                                      value=value)
     
     def requires_constraints_percentage(self) -> dict[str, Any]:
-        value = self.get_percentage_str(len(self.flamapy_spl.requires_constraints) / len(self.flamapy_spl.constraints))
+        value = 0 if not self.flamapy_spl.constraints else len(self.flamapy_spl.requires_constraints) / len(self.flamapy_spl.constraints)
+        value = self.get_percentage_str(value)
         return self.construct_result(name='Requires constraints %',
                                      description=FlamapySPL.requires_constraints.__doc__,
                                      value=value)
@@ -186,7 +188,8 @@ class StatisticalAnalysis():
                                      value=value)
     
     def excludes_constraints_percentage(self) -> dict[str, Any]:
-        value = self.get_percentage_str(len(self.flamapy_spl.excludes_constraints) / len(self.flamapy_spl.constraints))
+        value = 0 if not self.flamapy_spl.constraints else len(self.flamapy_spl.excludes_constraints) / len(self.flamapy_spl.constraints)
+        value = self.get_percentage_str(value)
         return self.construct_result(name='Excludes constraints %',
                                      description=FlamapySPL.excludes_constraints.__doc__,
                                      value=value)
@@ -198,7 +201,8 @@ class StatisticalAnalysis():
                                      value=value)
     
     def complex_constraints_percentage(self) -> dict[str, Any]:
-        value = self.get_percentage_str(len(self.flamapy_spl.complex_constraints) / len(self.flamapy_spl.constraints))
+        value = 0 if not self.flamapy_spl.constraints else len(self.flamapy_spl.complex_constraints) / len(self.flamapy_spl.constraints)
+        value = self.get_percentage_str(value)
         return self.construct_result(name='Complex constraints %',
                                      description=FlamapySPL.complex_constraints.__doc__,
                                      value=value)
@@ -210,7 +214,8 @@ class StatisticalAnalysis():
                                      value=value)
     
     def pseudocomplex_constraints_percentage(self) -> dict[str, Any]:
-        value = self.get_percentage_str(len(self.flamapy_spl.pseudocomplex_constraints) / len(self.flamapy_spl.constraints))
+        value = 0 if not self.flamapy_spl.constraints else len(self.flamapy_spl.pseudocomplex_constraints) / len(self.flamapy_spl.constraints)
+        value = self.get_percentage_str(value)
         return self.construct_result(name='Pseudo-complex constraints %',
                                      description=FlamapySPL.pseudocomplex_constraints.__doc__,
                                      value=value)
@@ -222,7 +227,8 @@ class StatisticalAnalysis():
                                      value=value)
     
     def strictcomplex_constraints_percentage(self) -> dict[str, Any]:
-        value = self.get_percentage_str(len(self.flamapy_spl.strictcomplex_constraints) / len(self.flamapy_spl.constraints))
+        value = 0 if not self.flamapy_spl.constraints else len(self.flamapy_spl.strictcomplex_constraints) / len(self.flamapy_spl.constraints)
+        value = self.get_percentage_str(value)
         return self.construct_result(name='Strict-complex constraints %',
                                      description=FlamapySPL.strictcomplex_constraints.__doc__,
                                      value=value)

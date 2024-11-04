@@ -3,7 +3,7 @@ import sys
 import pathlib
 import logging
 import argparse
-from typing import Optional, Any
+from typing import Optional
 
 from flamapy.metamodels.fm_metamodel.models import FeatureModel
 from flamapy.metamodels.fm_metamodel.transformations import UVLReader, FeatureIDEReader
