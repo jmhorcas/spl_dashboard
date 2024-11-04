@@ -1,125 +1,105 @@
+import math
 import sys
+import pathlib
+import logging
 import argparse
+from typing import Optional, Any
 
-from alive_progress import alive_bar, alive_it
+from flamapy.metamodels.fm_metamodel.models import FeatureModel
+from flamapy.metamodels.fm_metamodel.transformations import UVLReader, FeatureIDEReader
+from flamapy.metamodels.bdd_metamodel.transformations import FmToBDD
+from flamapy.metamodels.bdd_metamodel.operations import BDDFeatureInclusionProbability, BDDProductDistribution
 
-from flamapy.metamodels.fm_metamodel.transformations import UVLReader
-from flamapy.metamodels.fm_metamodel.operations import FMMetrics
-from flamapy.metamodels.bdd_metamodel.transformations import FmToBDD, DDDMPWriter
 
-import app.utils as utils
+PRECISION = 2
+
+
+def read_fm_file(filename: str) -> Optional[FeatureModel]:
+    try:
+        if filename.endswith(".uvl"):
+            return UVLReader(filename).transform()
+        elif filename.endswith(".xml") or filename.endswith(".fide"):
+            return FeatureIDEReader(filename).transform()
+    except Exception as e:
+        print(e)
+        pass
+    try:
+        return UVLReader(filename).transform()
+    except Exception as e:
+        print(e)
+        pass
+    try:
+        return FeatureIDEReader(filename).transform()
+    except Exception as e:
+        print(e)
+        pass
+    return None
+
+
+def get_nof_configuration_as_str(nof_configurations: int, precision: int = 2, max_limit: int = 1e6, aproximation: bool = False) -> str:
+    return f"{'≤ ' if aproximation else ''}{int_to_scientific_notation(nof_configurations, precision) if nof_configurations > max_limit else nof_configurations}"
+
+
+def int_to_scientific_notation(n: int, precision: int = 2) -> str:
+    """Convert a large int into scientific notation.
+    
+    It is required for large numbers that Python cannot convert to float,
+    solving the error `OverflowError: int too large to convert to float`.
+    """
+    str_n = str(n)
+    decimal = str_n[1:precision+1]
+    exponent = str(len(str_n) - 1)
+    return str_n[0] + '.' + decimal + 'e' + exponent
+
+
+def write_pd(pd: list[int], filepath: str) -> None:
+    x = list(range(len(pd)))
+    y = [get_nof_configuration_as_str(v) for v in pd]
+    with open(filepath, 'w', encoding='utf-8') as file:
+        file.write('Features,Configurations\n')
+        for x, y in zip(x, y):
+            file.write(f'{x},{y}\n')
+
+
+def write_fip(fip: dict[str, float], filepath: str) -> None:
+    x_axis = [x / 100.0 for x in range(0, 101, 1)]
+    y_axis = [round(sum(math.isclose(x, round(p, PRECISION), abs_tol=1e-4) for p in fip.values()) / len(fip), PRECISION) * 100 for x in x_axis]
+    with open(filepath, 'w', encoding='utf-8') as file:
+        file.write('Probability,Features\n')
+        for x, y in zip(x_axis, y_axis):
+            file.write(f'{x},{y}\n')
 
 
 def main(fm_filepath: str) -> None:
-    fm_model = UVLReader(fm_filepath).transform()
+    path = pathlib.Path(fm_filepath)
+    filename = path.stem
+    dir = path.parent
 
-    print(fm_model)
-    raise Exception
-    metrics_result = FMMetrics().execute(fm_model).get_result()
-    metrics_dict = {item["name"]: item for item in metrics_result}
-    ordered_metrics = [
-        metrics_dict[name] for name in utils.METRICS_ORDER if name in metrics_dict
-    ]
-
-    for metric in ordered_metrics:
-        print(f"{metric['name']}: {metric['size']}")
-
-    print(f'FM to BDD...')
-    bdd_model = FmToBDD(fm_model).transform()
-    DDDMPWriter('bdd_model.dddmp', bdd_model).transform()
-
-    # print(f'#Features: {len(fm_model.get_features())}')
-    # print(f'#Constraints: {len(fm_model.get_constraints())}')
+    # Read the feature model
+    fm = read_fm_file(fm_filepath)
+    if fm is None:
+        raise Exception('Feature model format not supported.')
     
-    # sat_model = FmToPysat(fm_model).transform()
-    # bdd_model = FmToBDD(fm_model).transform()
-
-    # n_configs = BDDConfigurationsNumber().execute(bdd_model).get_result()
-    # print(f'#Configs: {utils.int_to_scientific_notation(n_configs)}')
-
-    # core_features = BDDCoreFeatures().execute(bdd_model).get_result()
-    # print(f'Core features: ({len(core_features)}) {core_features}')
-
-    # variation_points = FMVariationPoints().execute(fm).get_result()
-    # print(f'Variations points:')
-    # for vp, variant in variation_points.items():
-    #     print(f'{vp} -> {variant}')
-
-    # sampling_op = BDDSampling()
-    # sampling_op.set_sample_size(5)
-    # sample = sampling_op.execute(bdd_model).get_result()
-    # configs_writer = ConfigurationsCSVWriter('configs.csv')
-    # configs_writer.set_elements([f.name for f in fm.get_features()])
-    # configs_writer.set_configurations(sample)
-    # configs_writer.transform()
-
-    # configs_reader = ConfigurationsCSVReader('configs.csv')
-    # configs_reader.store_only_selected_elements(False)
-    # sample2 = configs_reader.transform()
-    # print(f'Equals: {set(sample) == set(sample2)}')
-
-    # config_writer = ConfigurationsListWriter('configs.txt')
-    # config_writer.set_configurations(sample)
-    # config_writer.transform()
-
-    # configs_reader.store_only_selected_elements(True)
-    # sample3 = configs_reader.transform()
-    # sample4 = ConfigurationsListReader('configs.txt').transform()
-    # print(f'Equals: {set(sample3) == set(sample4)}')
+    try:
+        bdd_model = FmToBDD(fm).transform()
+    except Exception as e:
+        raise Exception('Error transforming the feature model to BDD.') from e
     
-    # configs_attributes = ConfigurationsAttributesReader('models/NamasteRincon_configs_simple.csv').transform()
-    # print(f'#Products in portfolio: {len(configs_attributes)}')
+    pd = BDDProductDistribution().execute(bdd_model).get_result()
+    fip = BDDFeatureInclusionProbability().execute(bdd_model).get_result()
 
-    # pl_model = ProductLineModel()
-    # pl_model.configurations = {config[0] for config in configs_attributes}
-    # print(pl_model)
-    # prod_dist_op = PLProductDistribution().execute(pl_model)
-    # prod_dist = prod_dist_op.get_result()
-    # desc_stats = prod_dist_op.descriptive_statistics()
-    # print(f'Product distribution: {prod_dist}')
-    # print(f'#Product dist: {sum(prod_dist)}')
-    # print(desc_stats)
-    
-    # fif = PLFeatureInclusionFrequency().execute(pl_model).get_result()
-    # fif = dict(sorted(fif.items(), key=lambda item: item[1]))
-    # print(f'Feature Inclusion Frequency:\n')
-    # for feature, freq in fif.items():
-    #     print(f'{feature}: {freq}')
-    # raise Exception
-    
-    # for config_attr in configs_attributes:
-    #     satis_config_op = BDDSatisfiableConfiguration()
-    #     satis_config_op.set_configuration(config_attr[0], is_full=False)
-    #     satis = satis_config_op.execute(bdd_model).get_result()
-    #     print(f'{config_attr[0]} -> {satis}')
-    
-    # print("full configurations:")
-    # false_configs = []
-    # full_configs = []
-    # for config_attr in configs_attributes:
-    #     full_config_op = FullConfigurations()
-    #     full_config_op.set_configuration(config_attr[0])
-    #     new_configs = full_config_op.execute(sat_model).get_result()
-    #     print(new_configs)
-    #     full_configs.extend(new_configs)
-    #     for config in new_configs:
-    #         satis_config_op = BDDSatisfiableConfiguration()
-    #         satis_config_op.set_configuration(config, is_full=True)
-    #         satis = satis_config_op.execute(bdd_model).get_result()
-    #         print(f'{config} -> {satis}')
-    #         if not satis:
-    #             false_configs.append((config_attr, config))
-    # config_writer = ConfigurationsListWriter('full_configs.txt')
-    # config_writer.set_configurations(full_configs)
-    # config_writer.transform()
-    # print(f'Invalid configs: {false_configs}')
-
-
+    pd_output_filepath = str(dir / f'{filename}_pd.csv')
+    fip_output_filepath = str(dir / f'{filename}_fip.csv')
+    write_pd(pd, pd_output_filepath)
+    write_fip(fip, fip_output_filepath)
+   
 
 if __name__ == '__main__':
-    sys.setrecursionlimit(100000)
-    parser = argparse.ArgumentParser(description='Product Line analysis.')
-    parser.add_argument(metavar='fm', dest='fm_filepath', type=str, help='Input feature model (.uvl).')
+    sys.set_int_max_str_digits(0)
+    logging.basicConfig(level=logging.ERROR)
+    
+    parser = argparse.ArgumentParser(description='FM Characterization.')
+    parser.add_argument(metavar='path', dest='path', type=str, help='Input feature model.')
     args = parser.parse_args()
 
-    main(args.fm_filepath)
+    main(args.path)
